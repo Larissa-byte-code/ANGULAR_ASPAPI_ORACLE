@@ -1,3 +1,9 @@
+#	Installer les dépendances
+#	Lancer les tests
+#	Compiler/build ton projet
+#	Créer une image Docker
+
+
 name: CI/CD Pipeline
 
 on:

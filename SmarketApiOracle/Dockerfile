@@ -1,3 +1,4 @@
+#Il compile ton API et crée une image prête à tourner
 # Étape 1 : Build du projet
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src

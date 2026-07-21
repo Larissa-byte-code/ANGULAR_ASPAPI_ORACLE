@@ -1,3 +1,6 @@
+#Il installe Node, build ton Angular, puis copie le résultat dans NGINX.
+#Résultat : une image Docker qui sert ton front Angular.
+
 # Étape 1 : Build Angular
 FROM node:18 AS build
 WORKDIR /app

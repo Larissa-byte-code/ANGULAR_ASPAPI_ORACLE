@@ -1,3 +1,5 @@
+#Décrit comment lancer plusieurs conteneurs ensemble (front + back + base de données).
+
 version: '3.8'
 services:
   api:
