@@ -1,3 +1,5 @@
+
+
 <div class="container mt-4">
   <h2 class="mb-4 text-primary">Gestion des Catégories</h2>
 
@@ -57,10 +59,12 @@
       </thead>
       <tbody>
         <tr *ngFor="let cat of categories">
-          <td>{{ cat.catId }}</td>
-          <td>{{ cat.catIdvC }}</td>
-          <td>{{ cat.catName }}</td>
-          <td>{{ cat.catDes }}</td>
+          <!-- <td>{{ cat.catId }}</td> -->
+         
+           <td>{{ cat.catId  }}</td>
+          <td>{{ cat.catIdvC  }}</td>
+          <td>{{ cat.catName  }}</td>
+          <td>{{ cat.catDes  }}</td>
           <td class="text-center">
             <button type="button" (click)="startEdit(cat)" class="btn btn-sm btn-outline-warning me-2">✏️ Edit</button>
             <button type="button" (click)="delete(cat.catId!)" class="btn btn-sm btn-outline-danger">🗑 Delete</button>

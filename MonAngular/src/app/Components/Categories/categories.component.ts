@@ -26,12 +26,16 @@ export class CategoriesComponent implements OnInit {
     this.loadCategories();
   }
 
-  loadCategories(): void {
-    this.categoryService.getAll().subscribe({
-      next: data  => this.categories = data,
-      error: err  => this.showMessage('Erreur chargement : ' + err.message, true)
-    });
-  }
+ loadCategories(): void {
+  this.categoryService.getAll().subscribe({
+    next: data => {
+      this.categories = data;
+      console.log('Catégories chargées :', this.categories);
+    },
+    error: err => this.showMessage('Erreur chargement : ' + err.message, true)
+  });
+}
+
 
   create(): void {
     this.categoryService.create(this.newCategory).subscribe({

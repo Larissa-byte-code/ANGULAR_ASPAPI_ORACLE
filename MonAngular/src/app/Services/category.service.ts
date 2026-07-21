@@ -3,14 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Category } from '../Models/category.model';
-
+import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
 export class CategoryService {
 
-  private apiUrl = 'http://localhost:5146/api/categories';
-
+ // private apiUrl = 'http://localhost:5146/api/categories';
+    private apiUrl = `${environment.apiUrl}/categories`;
   constructor(private http: HttpClient) {}
 
   // Récupérer toutes les catégories
