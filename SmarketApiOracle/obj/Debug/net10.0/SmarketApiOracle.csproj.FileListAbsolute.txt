@@ -111,3 +111,4 @@ C:\Users\User\Documents\FRONT_BACKORACLEANGULAR\SmarketApiOracle\obj\Debug\net10
 C:\Users\User\Documents\FRONT_BACKORACLEANGULAR\SmarketApiOracle\obj\Debug\net10.0\SmarketApiOracle.pdb
 C:\Users\User\Documents\FRONT_BACKORACLEANGULAR\SmarketApiOracle\obj\Debug\net10.0\SmarketApiOracle.genruntimeconfig.cache
 C:\Users\User\Documents\FRONT_BACKORACLEANGULAR\SmarketApiOracle\obj\Debug\net10.0\ref\SmarketApiOracle.dll
+C:\Users\User\Documents\FRONT_BACKORACLEANGULAR\SmarketApiOracle\obj\Debug\net10.0\SmarketApiOracle.sourcelink.json
