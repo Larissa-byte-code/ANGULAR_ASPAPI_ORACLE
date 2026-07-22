@@ -150,6 +150,20 @@ namespace SmarketApiOracle.Data
                             entity.Property(e => e.RefVenteId).HasColumnName("REFVENTEID");
                             entity.Property(e => e.Commentaire).HasColumnName("COMMENTAIRE");
                         });
+                        modelBuilder.Entity<TblUser>(entity =>
+                                {
+                                    entity.HasKey(e => e.UserId);
+
+                                    entity.Property(e => e.UserId)
+                                        .HasColumnName("USERID")
+                                        .ValueGeneratedOnAdd(); 
+
+                                    entity.Property(e => e.UserName).HasColumnName("USERNAME");
+                                    entity.Property(e => e.Email).HasColumnName("EMAIL");
+                                    entity.Property(e => e.PasswordHash).HasColumnName("PASSWORDHASH");
+                                    entity.Property(e => e.Role).HasColumnName("ROLE");
+                                });
+
 
                 }
 
