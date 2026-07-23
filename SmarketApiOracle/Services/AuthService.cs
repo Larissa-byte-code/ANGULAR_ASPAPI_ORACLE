@@ -47,9 +47,14 @@ namespace SmarketApiOracle.Services
         //  Méthode de login qui renvoie un objet { token = ... }
         public object? Login(string email, string password)
         {
+            //Cherche l’utilisateur par email.
+
+            //Si aucun trouvé → retourne null.
             var user = _db.TblUser.SingleOrDefault(u => u.Email == email);
             if (user == null) return null;
+            //Vérifie que le mot de passe fourni correspond au hash stocké.
 
+            //Si non → retourne null.
             if (!BCrypt.Net.BCrypt.Verify(password, user.PasswordHash ?? ""))
                 return null;
 
@@ -59,11 +64,27 @@ namespace SmarketApiOracle.Services
                 new Claim(ClaimTypes.Name, user.UserName ?? string.Empty),
                 new Claim(ClaimTypes.Role, user.Role ?? string.Empty)
             };
+            //Récupère la clé JWT depuis la config (ou valeur par défaut).
 
+            //Crée une clé symétrique pour signer le token.
+
+            //Utilise l’algorithme HMAC‑SHA256.
             var jwtKey = _config["Jwt:Key"] ?? "MaCleSecreteParDefaut1234567890AB";
             var key    = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
             var creds  = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            /*
+            Construit le token JWT :
 
+            issuer = qui a émis le token.
+
+            audience = qui peut l’utiliser.
+
+            claims = infos utilisateur.
+
+            expires = expiration (1h).
+           
+            signingCredentials = signature avec ta clé.
+            */
             var token = new JwtSecurityToken(
                 issuer: "SmarketApiOracle",
                 audience: "SmarketApiOracleUsers",
