@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SmarketApiOracle")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+379cda6e7d4f5804d551f2728784b6f59103b799")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d48a94d5f46592b646247bdf9fed63ed8d96f562")]
 [assembly: System.Reflection.AssemblyProductAttribute("SmarketApiOracle")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SmarketApiOracle")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
