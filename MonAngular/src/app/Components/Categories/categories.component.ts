@@ -101,4 +101,10 @@ delete → supprime une catégorie.
 showMessage → affiche un message temporaire.
 
  C’est un CRUD complet côté Angular, qui communique avec ton backend via CategoryService.
+
+ Le rôle de subscribe
+En Angular, les méthodes de ton CategoryService (comme getAll, create, update, delete) retournent des Observables (via HttpClient).
+- Un Observable est un flux de données asynchrones (par ex. une réponse HTTP).
+
+Pour consommer ce flux, tu dois t’abonner avec subscribe.
 */
