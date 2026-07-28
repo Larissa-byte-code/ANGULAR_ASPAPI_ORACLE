@@ -21,7 +21,7 @@ export class AuthInterceptor implements HttpInterceptor {
  Ton AuthInterceptor en Angular sert à intercepter toutes les requêtes HTTP sortantes 
  et à leur ajouter automatiquement le token JWT d’authentification.
 
-🔹 Rôle exact
+- Rôle exact
 Angular possède un mécanisme d’interceptor qui agit comme un “middleware” entre ton application et le serveur.
 
 Ici, ton AuthInterceptor :
