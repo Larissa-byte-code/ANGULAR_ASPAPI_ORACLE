@@ -16,7 +16,9 @@ namespace SmarketApiOracle.Controllers
         {
             _service = service;
         }
+        //[FromBody] = désérialisation automatique du JSON envoyé par le front.
 
+        //Le front envoie les données du formulaire en JSON → le back les lit grâce à [FromBody].
         // Accessible sans token
         [HttpPost("register")]
         [AllowAnonymous]
@@ -43,7 +45,7 @@ namespace SmarketApiOracle.Controllers
             catch (Exception ex)
             {
                 // Erreur serveur
-                return StatusCode(500, new { Message = "Erreur lors de l’inscription ❌", Details = ex.Message });
+                return StatusCode(500, new { Message = "Erreur lors de l’inscription ", Details = ex.Message });
             }
         }
 
@@ -53,8 +55,8 @@ namespace SmarketApiOracle.Controllers
         public IActionResult Login([FromBody] LoginRequest request)
         {
             var tokenObj = _service.Login(request.Email, request.Password);
-            return tokenObj == null ? Unauthorized(new { Message = "Email ou mot de passe incorrect ❌" }) 
-                                    : Ok(new { Message = "Connexion réussie ✅", Token = tokenObj });
+            return tokenObj == null ? Unauthorized(new { Message = "Email ou mot de passe incorrect " }) 
+                                    : Ok(new { Message = "Connexion réussie ", Token = tokenObj });
         }
 
         // Protégé par Bearer Token
