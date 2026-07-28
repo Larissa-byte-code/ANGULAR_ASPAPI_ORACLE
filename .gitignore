@@ -1,0 +1,32 @@
+# --- ASP.NET Core / C# ---
+bin/
+obj/
+*.user
+*.suo
+*.cache
+*.log
+*.dbmdl
+*.bak
+*.tmp
+*.pdb
+*.exe
+*.dll
+
+# --- Angular / Node ---
+node_modules/
+dist/
+tmp/
+*.log
+*.lock
+package-lock.json
+yarn.lock
+
+# --- IDE / Outils ---
+.vscode/
+.idea/
+*.swp
+*.DS_Store
+
+# --- Tests / Coverage ---
+coverage/
+TestResults/
