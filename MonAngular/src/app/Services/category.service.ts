@@ -10,7 +10,7 @@ import { environment } from '../../environments/environment';
 export class CategoryService {
 
  // private apiUrl = 'http://localhost:5146/api/categories';
-    private apiUrl = `${environment.apiUrl}/categories`;
+    private apiUrl = `${environment.apiUrl}/api/categories`;
   constructor(private http: HttpClient) {}
 
   // Récupérer toutes les catégories

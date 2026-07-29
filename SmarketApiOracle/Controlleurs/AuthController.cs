@@ -16,11 +16,12 @@ namespace SmarketApiOracle.Controllers
         {
             _service = service;
         }
-        //LARISSA LARISSA
+      
         //[FromBody] = désérialisation automatique du JSON envoyé par le front.
 
         //Le front envoie les données du formulaire en JSON → le back les lit grâce à [FromBody].
         // Accessible sans token
+        /*
         [HttpPost("register")]
         [AllowAnonymous]
         public IActionResult Register([FromBody] RegisterRequest request)
@@ -49,7 +50,37 @@ namespace SmarketApiOracle.Controllers
                 return StatusCode(500, new { Message = "Erreur lors de l’inscription ", Details = ex.Message });
             }
         }
+*/
+        [HttpPost("register")]
+        [AllowAnonymous]
+        public IActionResult Register([FromBody] RegisterRequest request)
+        {
+            try
+            {
+                var user = _service.Register(
+                    request.UserName,
+                    request.Email,
+                    request.Password,
+                    request.Role
+                );
 
+                return Ok(new { Message = "Inscription réussie", User = user }); // 200
+            }
+            catch (ArgumentException ex)
+                {
+                    return BadRequest(new { Message = ex.Message }); // 400 avec "Format d'email invalide."
+                }
+
+            catch (InvalidOperationException ex)
+            {
+                return Conflict(new { Message = ex.Message }); // 409
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "Erreur serveur", Details = ex.Message }); // 500
+            }
+        }
+        /*
         // Login avec JSON
         [HttpPost("login")]
         [AllowAnonymous]
@@ -83,5 +114,25 @@ namespace SmarketApiOracle.Controllers
         {
             return Ok("Données sensibles réservées aux Admins !");
         }
+        */
+        [HttpPost("login")]
+        [AllowAnonymous]
+        public IActionResult Login([FromBody] LoginRequest request)
+        {
+            try
+            {
+                var token = _service.Login(request.Email, request.Password);
+
+                if (token == null)
+                    return Unauthorized(new { Message = "Email ou mot de passe incorrect" }); // 401
+
+                return Ok(new { Message = "Connexion réussie", Token = token }); // 200
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "Erreur serveur", Details = ex.Message }); // 500
+            }
+        }
+
     }
 }

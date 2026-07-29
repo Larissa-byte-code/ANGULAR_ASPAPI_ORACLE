@@ -4,6 +4,7 @@ using SmarketApiOracle.Services;
 
 namespace SmarketApiOracle.Controllers
 {
+    /*
     [ApiController]
     [Route("api/[controller]")]
     public class CategoriesController : ControllerBase
@@ -62,4 +63,68 @@ namespace SmarketApiOracle.Controllers
             return deleted ? NoContent() : NotFound();
         }
     }
+    */
+        [ApiController]
+        [Route("api/[controller]")]
+        public class CategoriesController : ControllerBase
+        {
+            private readonly CategoryService _service;
+
+            public CategoriesController(CategoryService service)
+            {
+                _service = service;
+            }
+
+            [HttpGet("all")]
+            public async Task<IActionResult> GetAll()
+            {
+                var categories = await _service.GetAllAsync();
+                return Ok(categories);
+            }
+
+            [HttpGet("get/{id}")]
+            public async Task<IActionResult> GetById(int id)
+            {
+                var category = await _service.GetByIdAsync(id);
+                if (category is null)
+                    return NotFound(new { Message = "Catégorie introuvable." });
+
+                return Ok(category);
+            }
+
+            [HttpPost("add")]
+            public async Task<IActionResult> Create([FromBody] TblCategory category)
+            {
+                try
+                {
+                    var created = await _service.AddAsync(category);
+                    return CreatedAtAction(nameof(GetById), new { id = created.CatId }, created);
+                }
+                catch (Exception ex)
+                {
+                    return StatusCode(500, new { Message = "Erreur serveur", Details = ex.Message });
+                }
+            }
+
+            [HttpPut("update/{id}")]
+            public async Task<IActionResult> Update(int id, [FromBody] TblCategory category)
+            {
+                var updated = await _service.UpdateAsync(id, category);
+                if (updated is null)
+                    return NotFound(new { Message = "Catégorie introuvable pour mise à jour." });
+
+                return Ok(updated);
+            }
+
+            [HttpDelete("delete/{id}")]
+            public async Task<IActionResult> Delete(int id)
+            {
+                var deleted = await _service.DeleteAsync(id);
+                if (!deleted)
+                    return NotFound(new { Message = "Catégorie introuvable pour suppression." });
+
+                return NoContent();
+            }
+        }
+
 }

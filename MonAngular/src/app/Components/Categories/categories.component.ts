@@ -13,6 +13,94 @@ import { Category } from '../../Models/category.model';
 export class CategoriesComponent implements OnInit {
 
   categories: Category[] = [];
+  newCategory: Category = { catId: 0, catName: '', catDes: '', catIdvC: '' };
+  editCategory: Category | null = null;
+  message = '';
+  isError = false;
+
+  constructor(private categoryService: CategoryService) {}
+
+  ngOnInit(): void {
+    this.loadCategories();
+  }
+
+  loadCategories(): void {
+    this.categoryService.getAll().subscribe({
+      next: data => {
+        this.categories = data;
+        console.log('Catégories chargées :', this.categories);
+      },
+      error: err => this.showMessage('Erreur chargement : ' + err.message, true)
+    });
+  }
+
+  create(): void {
+    this.categoryService.create(this.newCategory).subscribe({
+      next: () => {
+        this.showMessage('Catégorie ajoutée avec succès !', false);
+        this.newCategory = { catId: 0, catName: '', catDes: '', catIdvC: '' };
+        this.loadCategories();
+      },
+      error: err => this.showMessage('Erreur ajout : ' + err.message, true)
+    });
+  }
+
+  startEdit(cat: Category): void {
+    this.editCategory = { ...cat };
+  }
+
+  update(): void {
+    if (!this.editCategory?.catId) return;
+    this.categoryService.update(this.editCategory.catId, this.editCategory).subscribe({
+      next: () => {
+        this.showMessage('Catégorie modifiée !', false);
+        this.editCategory = null;
+        this.loadCategories();
+      },
+      error: err => this.showMessage('Erreur modification : ' + err.message, true)
+    });
+  }
+
+  delete(id: number): void {
+    if (!confirm('Supprimer cette catégorie ?')) return;
+    this.categoryService.delete(id).subscribe({
+      next: () => {
+        this.showMessage('Catégorie supprimée !', false);
+        this.loadCategories();
+      },
+      error: err => this.showMessage('Erreur suppression : ' + err.message, true)
+    });
+  }
+
+  cancelEdit(): void {
+    this.editCategory = null;
+  }
+
+  // Fonction showMessage bien définie
+  showMessage(msg: string, error: boolean): void {
+    this.message = msg;
+    this.isError = error;
+    setTimeout(() => this.message = '', 3000);
+  }
+}
+
+
+/*
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { CategoryService } from '../../Services/category.service';
+import { Category } from '../../Models/category.model';
+
+@Component({
+  selector: 'app-categories',
+  standalone: true,
+  imports: [CommonModule, FormsModule],
+  templateUrl: './categories.component.html'
+})
+export class CategoriesComponent implements OnInit {
+
+  categories: Category[] = [];
  
   newCategory: Category = { catId: 0, catName: '', catDes: '', catIdvC: '' };
 
@@ -85,7 +173,10 @@ export class CategoriesComponent implements OnInit {
     setTimeout(() => this.message = '', 3000);
   }
 }
-/*
+  
+   
+
+
 Ton composant :
 
 ngOnInit → charge les catégories.

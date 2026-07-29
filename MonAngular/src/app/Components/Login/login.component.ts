@@ -14,13 +14,25 @@ export class LoginComponent {
   password = '';
 
   constructor(private authService: AuthService, private router: Router) {}  
+
   onLogin() {
     this.authService.login(this.email, this.password).subscribe({
       next: () => {
         alert('Connexion réussie !');
         this.router.navigate(['/categories']);   
       },
-      error: () => alert('Email ou mot de passe incorrect')
+      error: (err) => {
+        if (err.status === 401) {
+          // Mauvais identifiants
+          alert(err.error?.Message || 'Email ou mot de passe incorrect');
+        } else if (err.status === 400) {
+          // Erreur de validation (champs vides, format email invalide)
+          alert(err.error?.Message || 'Données invalides');
+        } else {
+          // Erreur serveur
+          alert('Erreur serveur. Réessayez plus tard.');
+        }
+      }
     });
   }
 }
