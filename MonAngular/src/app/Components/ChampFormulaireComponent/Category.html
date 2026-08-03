@@ -30,7 +30,7 @@
 
   <!-- Formulaire Edition -->
   <form *ngIf="editMode" [formGroup]="formEdition" (ngSubmit)="update()" class="carte p-4 mb-4 border-warning">
-    <h4 class="text-warning mb-3">✏️ Modifier la catégorie</h4>
+    <h4 class="text-warning mb-3"> Modifier la catégorie</h4>
     <div class="grille">
       <app-champ libelle="Nom" pour="editCatName" [control]="formEdition.controls.catName">
         <input id="editCatName" type="text" formControlName="catName" />
