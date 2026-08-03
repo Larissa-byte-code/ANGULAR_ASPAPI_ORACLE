@@ -1,0 +1,24 @@
+<main class="login">
+  <form class="carte login__carte" [formGroup]="form" (ngSubmit)="onLogin()" novalidate>
+    <h2 class="login__titre">Connexion</h2>
+
+    <div *ngIf="erreur" class="alert alert-danger mb-3" role="alert">{{ erreur }}</div>
+
+    <app-champ libelle="Email" pour="email" [control]="form.controls.email">
+      <input id="email" type="email" formControlName="email"
+             [attr.aria-invalid]="form.controls.email.invalid && form.controls.email.touched"
+             aria-describedby="email-erreur" />
+    </app-champ>
+
+    <app-champ libelle="Mot de passe" pour="password" [control]="form.controls.password">
+      <input id="password" type="password" formControlName="password"
+             [attr.aria-invalid]="form.controls.password.invalid && form.controls.password.touched"
+             aria-describedby="password-erreur" />
+    </app-champ>
+
+    <button type="submit" class="bouton bouton--primaire login__valider"
+            [disabled]="enCours">
+      {{ enCours ? 'Connexion…' : 'Se connecter' }}
+    </button>
+  </form>
+</main>

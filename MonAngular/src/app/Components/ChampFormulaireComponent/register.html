@@ -1,0 +1,30 @@
+<main class="register">
+  <form class="carte register__carte" [formGroup]="form" (ngSubmit)="onRegister()" novalidate>
+    <h2 class="register__titre">Inscription</h2>
+
+    <div *ngIf="erreur" class="alert alert-danger mb-3" role="alert">{{ erreur }}</div>
+
+    <app-champ libelle="Nom d’utilisateur" pour="username" [control]="form.controls.username">
+      <input id="username" type="text" formControlName="username"
+             [attr.aria-invalid]="form.controls.username.invalid && form.controls.username.touched"
+             aria-describedby="username-erreur" />
+    </app-champ>
+
+    <app-champ libelle="Email" pour="email" [control]="form.controls.email">
+      <input id="email" type="email" formControlName="email"
+             [attr.aria-invalid]="form.controls.email.invalid && form.controls.email.touched"
+             aria-describedby="email-erreur" />
+    </app-champ>
+
+    <app-champ libelle="Mot de passe" pour="password" [control]="form.controls.password">
+      <input id="password" type="password" formControlName="password"
+             [attr.aria-invalid]="form.controls.password.invalid && form.controls.password.touched"
+             aria-describedby="password-erreur" />
+    </app-champ>
+
+    <button type="submit" class="bouton bouton--primaire register__valider"
+            [disabled]="enCours">
+      {{ enCours ? 'Inscription…' : 'S’inscrire' }}
+    </button>
+  </form>
+</main>
