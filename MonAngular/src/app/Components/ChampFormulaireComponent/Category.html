@@ -1,0 +1,75 @@
+<div class="conteneur mt-4">
+  <h2 class="mb-4 text-primary">Gestion des Catégories</h2>
+
+  <!-- Message -->
+  <div *ngIf="message" [class]="isError ? 'alert alert-danger' : 'alert alert-success'" class="mb-3">
+    {{ message }}
+  </div>
+
+  <!-- États -->
+  <p *ngIf="etat === 'chargement'" class="etat" aria-busy="true">Chargement…</p>
+  <p *ngIf="etat === 'vide'" class="etat">Aucune catégorie trouvée.</p>
+  <p *ngIf="etat === 'erreur'" class="etat alert alert-danger">Erreur lors du chargement.</p>
+
+  <!-- Formulaire Ajout -->
+  <form *ngIf="!editMode" [formGroup]="formAjout" (ngSubmit)="create()" class="carte p-4 mb-4">
+    <h4 class="mb-3">➕ Ajouter une catégorie</h4>
+    <div class="grille">
+      <app-champ libelle="Nom" pour="catName" [control]="formAjout.controls.catName">
+        <input id="catName" type="text" formControlName="catName" />
+      </app-champ>
+
+      <app-champ libelle="Description" pour="catDes" [control]="formAjout.controls.catDes">
+        <input id="catDes" type="text" formControlName="catDes" />
+      </app-champ>
+    </div>
+    <div class="text-end mt-3">
+      <button type="submit" class="bouton bouton--primaire">Ajouter</button>
+    </div>
+  </form>
+
+  <!-- Formulaire Edition -->
+  <form *ngIf="editMode" [formGroup]="formEdition" (ngSubmit)="update()" class="carte p-4 mb-4 border-warning">
+    <h4 class="text-warning mb-3">✏️ Modifier la catégorie</h4>
+    <div class="grille">
+      <app-champ libelle="Nom" pour="editCatName" [control]="formEdition.controls.catName">
+        <input id="editCatName" type="text" formControlName="catName" />
+      </app-champ>
+
+      <app-champ libelle="Description" pour="editCatDes" [control]="formEdition.controls.catDes">
+        <input id="editCatDes" type="text" formControlName="catDes" />
+      </app-champ>
+    </div>
+    <div class="text-end mt-3">
+      <button type="submit" class="bouton bouton--secondaire me-2">Modifier</button>
+      <button type="button" (click)="cancelEdit()" class="bouton">Annuler</button>
+    </div>
+  </form>
+
+  <!-- Tableau responsive -->
+  <div *ngIf="etat === 'ok'" class="tableau-enveloppe">
+    <table class="tableau">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Code</th>
+          <th>Nom</th>
+          <th>Description</th>
+          <th class="col-actions">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cat of categories">
+          <td data-label="ID">{{ cat.catId }}</td>
+          <td data-label="Code">{{ cat.catIdvC }}</td>
+          <td data-label="Nom">{{ cat.catName }}</td>
+          <td data-label="Description">{{ cat.catDes }}</td>
+          <td data-label="Actions" class="col-actions">
+            <button type="button" (click)="startEdit(cat)" class="bouton bouton--secondaire">Modifier</button>
+            <button type="button" (click)="delete(cat.catId!)" class="bouton bouton--danger">Supprimer</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
