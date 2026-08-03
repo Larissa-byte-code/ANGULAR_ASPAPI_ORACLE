@@ -1,6 +1,4 @@
-
-
-<div class="container mt-4">
+<div class="conteneur mt-4">
   <h2 class="mb-4 text-primary">Gestion des Catégories</h2>
 
   <!-- Message -->
@@ -9,68 +7,88 @@
   </div>
 
   <!-- Formulaire Ajout -->
-  <form *ngIf="!editCategory" (ngSubmit)="create()" #catForm="ngForm" class="card shadow-sm p-4 mb-4">
+  <form *ngIf="!editCategory" (ngSubmit)="create()" #catForm="ngForm" class="carte p-4 mb-4">
     <h4 class="mb-3">➕ Ajouter une catégorie</h4>
-    <div class="row g-3">
-      <div class="col-md-6">
+    <div class="grille">
+      <div>
         <label class="form-label">Nom</label>
         <input [(ngModel)]="newCategory.catName" name="catName" placeholder="Nom de la catégorie" class="form-control" required />
       </div>
-      <div class="col-md-6">
+      <div>
         <label class="form-label">Description</label>
         <input [(ngModel)]="newCategory.catDes" name="catDes" placeholder="Description" class="form-control" required />
       </div>
-      <div class="col-12 text-end">
-        <button type="submit" class="btn btn-success px-4">Ajouter</button>
-      </div>
+    </div>
+    <div class="text-end mt-3">
+      <button type="submit" class="bouton bouton--primaire">Ajouter</button>
     </div>
   </form>
 
   <!-- Formulaire Edition -->
-  <form *ngIf="editCategory" (ngSubmit)="update()" #editForm="ngForm" class="card shadow-sm p-4 mb-4 border-warning">
-    <h4 class="text-warning mb-3"> Modifier la catégorie</h4>
-    <div class="row g-3">
-      <div class="col-md-6">
+  <form *ngIf="editCategory" (ngSubmit)="update()" #editForm="ngForm" class="carte p-4 mb-4 border-warning">
+    <h4 class="text-warning mb-3">✏️ Modifier la catégorie</h4>
+    <div class="grille">
+      <div>
         <label class="form-label">Nom</label>
         <input [(ngModel)]="editCategory.catName" name="editCatName" placeholder="Nom" class="form-control" required />
       </div>
-      <div class="col-md-6">
+      <div>
         <label class="form-label">Description</label>
         <input [(ngModel)]="editCategory.catDes" name="editCatDes" placeholder="Description" class="form-control" required />
       </div>
-      <div class="col-12 text-end">
-        <button type="submit" class="btn btn-warning me-2">Modifier</button>
-        <button type="button" (click)="cancelEdit()" class="btn btn-secondary">Annuler</button>
-      </div>
+    </div>
+    <div class="text-end mt-3">
+      <button type="submit" class="bouton bouton--secondaire me-2">Modifier</button>
+      <button type="button" (click)="cancelEdit()" class="bouton">Annuler</button>
     </div>
   </form>
 
-  <!-- Tableau -->
-  <div class="card shadow-sm">
-    <table class="table table-hover mb-0">
-      <thead class="table-dark">
+  <!-- Tableau responsive -->
+  <div class="tableau-enveloppe">
+    <table class="tableau">
+      <thead>
         <tr>
           <th>ID</th>
           <th>Code</th>
           <th>Nom</th>
           <th>Description</th>
-          <th class="text-center">Actions</th>
+          <th class="col-actions">Actions</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let cat of categories">
-          <!-- <td>{{ cat.catId }}</td> -->
-         
-           <td>{{ cat.catId  }}</td>
-          <td>{{ cat.catIdvC  }}</td>
-          <td>{{ cat.catName  }}</td>
-          <td>{{ cat.catDes  }}</td>
-          <td class="text-center">
-            <button type="button" (click)="startEdit(cat)" class="btn btn-sm btn-outline-warning me-2">Edit</button>
-            <button type="button" (click)="delete(cat.catId!)" class="btn btn-sm btn-outline-danger">Delete</button>
+          <td data-label="ID">{{ cat.catId }}</td>
+          <td data-label="Code">{{ cat.catIdvC }}</td>
+          <td data-label="Nom">{{ cat.catName }}</td>
+          <td data-label="Description">{{ cat.catDes }}</td>
+          <td data-label="Actions" class="col-actions">
+            <button type="button" (click)="startEdit(cat)" class="bouton bouton--secondaire">Modifier</button>
+            <button type="button" (click)="delete(cat.catId!)" class="bouton bouton--danger">Supprimer</button>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
 </div>
+<!--
+Explications des lignes changées
+div class="conteneur"  
+→ Remplace container Bootstrap par conteneur défini dans ton fichier Word (mobile‑first, centré sur grand écran).
+
+class="carte"  
+→ Remplace card shadow-sm par carte (style blanc arrondi avec ombre, cohérent avec ton guide).
+
+div class="grille" 
+→ Remplace row g-3 par grille (1 colonne mobile → 2 colonnes PC, comme dans la fiche utilisateur du document).
+
+Boutons  
+→ Remplace btn btn-success / btn btn-warning par bouton bouton--primaire ou bouton bouton--secondaire (styles cohérents avec ton thème CSS global).
+
+Tableau responsive
+
+Ajout de data-label="..." sur chaque "td".
+
+Cela permet au CSS de transformer le tableau en cartes sur mobile (affichage “Nom : …”, “Description : …”).
+
+Classe col-actions pour aligner les boutons correctement.
+-->

@@ -7,15 +7,13 @@ namespace SmarketApiOracle.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        //clé auto‑incrémentée gérée par la base.
-        //cette clé est générée par la base
         public int CatId { get; set; }
 
-        public  required string CatName { get; set; }
-        public  required string CatDes { get; set; }
-        public required string CatIdvC { get; set; } = "PENDING";
+        // Autoriser null avec string?
+        public string? CatName { get; set; }   
+        public string? CatDes { get; set; }    
 
- 
-
+        // Valeur par défaut si null
+        public string CatIdvC { get; set; } = "PENDING";
     }
 }
