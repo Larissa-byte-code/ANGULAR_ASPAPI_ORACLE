@@ -1,21 +1,28 @@
+
 <main class="login">
   <form class="carte login__carte" (ngSubmit)="onLogin()" novalidate>
     <h2 class="login__titre">Connexion</h2>
 
+    <!-- Message d'erreur -->
+    <div *ngIf="erreur" class="alert alert-danger mb-3" role="alert">
+      {{ erreur }}
+    </div>
+
     <div class="champ">
       <label for="email">Email</label>
       <input id="email" [(ngModel)]="email" name="email" type="email" placeholder="Email"
-             required class="form-control" />
+             required class="form-control" [disabled]="enCours" />
     </div>
 
     <div class="champ">
       <label for="password">Mot de passe</label>
       <input id="password" [(ngModel)]="password" name="password" type="password"
-             placeholder="Mot de passe" required class="form-control" />
+             placeholder="Mot de passe" required class="form-control" [disabled]="enCours" />
     </div>
 
-    <button type="submit" class="bouton bouton--primaire login__valider">
-      Se connecter
+    <button type="submit" class="bouton bouton--primaire login__valider"
+            [disabled]="enCours">
+      {{ enCours ? 'Connexion…' : 'Se connecter' }}
     </button>
   </form>
 </main>

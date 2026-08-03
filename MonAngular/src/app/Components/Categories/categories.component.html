@@ -6,6 +6,11 @@
     {{ message }}
   </div>
 
+  <!-- États -->
+  <p *ngIf="etat === 'chargement'" class="etat" aria-busy="true">Chargement…</p>
+  <p *ngIf="etat === 'vide'" class="etat">Aucune catégorie trouvée.</p>
+  <p *ngIf="etat === 'erreur'" class="etat alert alert-danger">Erreur lors du chargement.</p>
+
   <!-- Formulaire Ajout -->
   <form *ngIf="!editCategory" (ngSubmit)="create()" #catForm="ngForm" class="carte p-4 mb-4">
     <h4 class="mb-3">➕ Ajouter une catégorie</h4>
@@ -44,7 +49,7 @@
   </form>
 
   <!-- Tableau responsive -->
-  <div class="tableau-enveloppe">
+  <div *ngIf="etat === 'ok'" class="tableau-enveloppe">
     <table class="tableau">
       <thead>
         <tr>
@@ -70,6 +75,7 @@
     </table>
   </div>
 </div>
+
 <!--
 Explications des lignes changées
 div class="conteneur"  

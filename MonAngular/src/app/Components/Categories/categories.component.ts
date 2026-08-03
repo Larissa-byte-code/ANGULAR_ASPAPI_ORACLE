@@ -7,7 +7,7 @@ import { Category } from '../../Models/category.model';
 @Component({
   selector: 'app-categories',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule],// FormsModule pour ngModel
   templateUrl: './categories.component.html'
 })
 export class CategoriesComponent implements OnInit {
@@ -18,6 +18,9 @@ export class CategoriesComponent implements OnInit {
   message = '';
   isError = false;
 
+  // Ajout d’un état explicite
+  etat: 'chargement' | 'ok' | 'vide' | 'erreur' = 'chargement';
+
   constructor(private categoryService: CategoryService) {}
 
   ngOnInit(): void {
@@ -25,12 +28,16 @@ export class CategoriesComponent implements OnInit {
   }
 
   loadCategories(): void {
+    this.etat = 'chargement';
     this.categoryService.getAll().subscribe({
       next: data => {
         this.categories = data;
-        console.log('Catégories chargées :', this.categories);
+        this.etat = this.categories.length === 0 ? 'vide' : 'ok';
       },
-      error: err => this.showMessage('Erreur chargement : ' + err.message, true)
+      error: err => {
+        this.showMessage('Erreur chargement : ' + err.message, true);
+        this.etat = 'erreur';
+      }
     });
   }
 
@@ -41,7 +48,10 @@ export class CategoriesComponent implements OnInit {
         this.newCategory = { catId: 0, catName: '', catDes: '', catIdvC: '' };
         this.loadCategories();
       },
-      error: err => this.showMessage('Erreur ajout : ' + err.message, true)
+      error: err => {
+        this.showMessage('Erreur ajout : ' + err.message, true);
+        this.etat = 'erreur';
+      }
     });
   }
 
@@ -57,7 +67,10 @@ export class CategoriesComponent implements OnInit {
         this.editCategory = null;
         this.loadCategories();
       },
-      error: err => this.showMessage('Erreur modification : ' + err.message, true)
+      error: err => {
+        this.showMessage('Erreur modification : ' + err.message, true);
+        this.etat = 'erreur';
+      }
     });
   }
 
@@ -68,7 +81,10 @@ export class CategoriesComponent implements OnInit {
         this.showMessage('Catégorie supprimée !', false);
         this.loadCategories();
       },
-      error: err => this.showMessage('Erreur suppression : ' + err.message, true)
+      error: err => {
+        this.showMessage('Erreur suppression : ' + err.message, true);
+        this.etat = 'erreur';
+      }
     });
   }
 
@@ -76,7 +92,6 @@ export class CategoriesComponent implements OnInit {
     this.editCategory = null;
   }
 
-  // Fonction showMessage bien définie
   showMessage(msg: string, error: boolean): void {
     this.message = msg;
     this.isError = error;

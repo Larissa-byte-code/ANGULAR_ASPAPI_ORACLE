@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { AuthService } from '../../Services/auth.service';
 
 @Component({
   selector: 'app-register',
   standalone: true,              // composant standalone
-  imports: [FormsModule],        // FormsModule pour ngModel
+  imports: [FormsModule, CommonModule],// FormsModule pour ngModel
   templateUrl: './register.component.html'
 })
 export class RegisterComponent {
@@ -13,24 +15,33 @@ export class RegisterComponent {
   email = '';
   password = '';
 
-  constructor(private authService: AuthService) {}
+  enCours = false;          // état de chargement
+  erreur: string | null = null;  // message d'erreur
+
+  constructor(private authService: AuthService, private router: Router) {}
 
   onRegister() {
+    if (!this.username || !this.email || !this.password) {
+      this.erreur = 'Veuillez remplir tous les champs.';
+      return;
+    }
+
+    this.enCours = true;
+    this.erreur = null;
+
     this.authService.register(this.username, this.email, this.password).subscribe({
       next: () => {
-        alert('Inscription réussie !');
-        // tu peux rediriger vers /login ici
+        this.enCours = false;
+        this.router.navigate(['/login']); //  redirection après succès
       },
       error: (err) => {
+        this.enCours = false;
         if (err.status === 400) {
-          // Validation : email invalide, champ vide, etc.
-          alert(err.error?.Message || 'Données invalides');
+          this.erreur = err.error?.Message || 'Données invalides';
         } else if (err.status === 409) {
-          // Doublon : email déjà utilisé
-          alert('Un compte avec cet email existe déjà.');
+          this.erreur = 'Un compte avec cet email existe déjà.';
         } else {
-          // Erreur serveur
-          alert('Erreur serveur. Réessayez plus tard.');
+          this.erreur = 'Erreur serveur. Réessayez plus tard.';
         }
       }
     });
