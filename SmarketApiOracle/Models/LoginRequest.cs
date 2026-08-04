@@ -11,3 +11,27 @@ namespace SmarketApiOracle.Models
 
 
 }
+/*
+DTO signifie Data Transfer 
+Object (Objet de Transfert de Données).
+
+Son rôle est de transporter uniquement les données
+nécessaires entre le client (React, Angular, mobile...) et l'API.
+
+Base SQL
+     │
+     ▼
+Entity (class C#)
+     │
+     ▼
+DTO (class C#)
+     │
+     ▼
+JSON
+     │
+     ▼
+Interface TypeScript
+
+Backend → class (Entity, DTO)
+Frontend → interface (pour typer les données JSON)
+*/
