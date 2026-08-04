@@ -120,7 +120,7 @@ namespace SmarketApiOracle
 
             // Middleware personnalisé
             app.UseMiddleware<ErrorHandlingMiddleware>();
-         app.UseMiddleware<JwtMiddleware>();
+            app.UseMiddleware<JwtMiddleware>();
 
             // Authentification + Autorisation
             app.UseAuthentication();
